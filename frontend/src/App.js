@@ -1,8 +1,8 @@
-import "./App.css";
+import "./App.scss";
 import React from "react";
 import NavBar from "./components/NavBar/NavBar";
 import SubNavbar from "./components/SubNavbar/SubNavbar";
-import MainCard from "./components/MainCard";
+import MainCard from "./components/MainCard/MainCard";
 import Test from "./components/Test/test";
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
         <main className="container">
           <NavBar />
           <SubNavbar />
-          {/* <MainCard /> */}
+          <MainCard />
           <div className="footer-style"></div>
         </main>
       </body>

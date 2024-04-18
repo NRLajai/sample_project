@@ -37,39 +37,17 @@ const SubNavbar = () => {
     },
   ]);
 
-  // const subnavStyle = {
-  //   display: "inline-block",
-  //   textDecoration: "none",
-  //   backgroundColor: "green",
-  //   padding: "0px 40px 0px 40px",
-  //   color: "white",
-  //   fontSize: "15px",
-  //   position: "relative",
-  // };
-
-  // const linkStyle = {
-  //   width: "15px",
-  //   height: "15px",
-  //   borderRadius: "50%",
-  //   paddingRight: "5px",
-  // };
-
-  // const linkfontStyle = {
-  //   fontSize: "8px",
-  //   fontWeight: "bold",
-  // };
-
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className="appbar" position="static">
           <Toolbar className="flex-container toolbar">
             {columns.map((navlink) => (
-              <div className="Subnavlinks">
+              <div key={navlink.title} className="Subnavlinks">
                 {navlink.img}
-                <div className="subnavlink-text">
-                  <b className="linktitle">{navlink.title}</b>
-                  <span className="spantext">
+                <div>
+                  <b>{navlink.title}</b>
+                  <span>
                     {navlink.count} {navlink.text}
                   </span>
                 </div>
@@ -78,60 +56,6 @@ const SubNavbar = () => {
           </Toolbar>
         </AppBar>
       </Box>
-
-      {/* <Navbar
-        expand="lg"
-        className="bg-body-tertiary"
-        style={{
-          backgroundColor: "red",
-          maxWidth: "100%",
-          marginLeft: "2.5%",
-          marginRight: "2.5%",
-          height: "70px",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Container>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto d-flex justify-content-center">
-                          
-              <Nav.Link href="/leads" style={useStyle}>
-                <div className="d-inline-flex">
-                  <ListAltIcon style={linkStyle} />
-                  <b>Leads</b>
-                  <p style={linkfontStyle}>12 leads are pedning</p>
-                </div>
-              </Nav.Link>
-
-              <Nav.Link href="/accounts" style={useStyle}>
-                <div className="d-inline-flex">
-                  <AssignmentIcon style={linkStyle} />
-                  <b>Accounts</b>
-                  <p style={linkfontStyle}>10 active accounts</p>
-                </div>
-              </Nav.Link>
-
-              <Nav.Link href="/contacts" style={useStyle}>
-                <div className="d-inline-flex">
-                  <ContactsIcon style={linkStyle} />
-                  <b>Contacts</b>
-                  <p style={linkfontStyle}>10 active users</p>
-                </div>
-              </Nav.Link>
-
-              <Nav.Link href="/tasks" style={useStyle}>
-                <div className="d-inline-flex">
-                  <WatchLaterRoundedIcon style={linkStyle} />
-                  <b>Tasks</b>
-                  <p style={linkfontStyle}>10 tasks are pending</p>
-                </div>
-              </Nav.Link>
-
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar> */}
     </>
   );
 };

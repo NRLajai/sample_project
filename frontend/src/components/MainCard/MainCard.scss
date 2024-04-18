@@ -1,0 +1,14 @@
+@mixin tabstyle {
+  background-color: white;
+}
+
+.new-tab {
+  background-color: #cccbc8;
+  color: grey !important;
+  border-style: none;
+}
+
+.new-tab:hover,
+.new-tab:active {
+  @include tabstyle;
+}
