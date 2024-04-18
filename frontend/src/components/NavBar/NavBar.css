@@ -1,0 +1,14 @@
+
+.new-navbar {
+  display: "flex";
+  max-width: "100%";
+  background-color: "blue"
+}
+
+.brand {
+  padding-left: "15px";
+  margin-top: "10px";
+  margin-bottom: "0px";
+  padding-bottom: "0px";
+  border-radius: "50%";
+}

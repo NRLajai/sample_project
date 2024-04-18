@@ -1,0 +1,49 @@
+.Subnavlinks {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0px 20px 0px 45px;
+  color: white;
+  font-size: 15px;
+  position: relative;
+}
+
+.Subnavlinks {
+  display: block;
+}
+
+.Subnavlinks > img {
+  align-items: center;
+  display: inline-flex;
+}
+
+.subnavlink-text {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0px;
+  padding: 0px 0px 0px 8px;
+}
+
+.linktitle {
+  display: block !important;
+  font-size: 14px;
+  padding-bottom: 1px;
+}
+
+.spantext {
+  padding-top: 1px;
+  display: block !important;
+  font-size: 11px;
+}
+
+.toolbar {
+  justify-content: center;
+  background-color: blue;
+  border-style: none;
+}
+
+.appbar {
+  /* background-color: "white"; */
+  background-color: "blue";
+  box-shadow: "none";
+}

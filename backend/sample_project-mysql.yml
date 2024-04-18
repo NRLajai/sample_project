@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - /home/emedhub/mine/mysql/data_backend:/var/lib/mysql
+      - /home/emedhub/mine/mysql/mysqld_backend:/var/run/mysqld
+    environment:
+      MYSQL_ROOT_PASSWORD: MyPassword
+      MYSQL_PASSWORD: MyPassword
+      MYSQL_USER: lalit
+      MYSQL_DATABASE: backend_database
+    ports:
+      - 3307:3306
+    container_name: mysql-test
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - ADMINER_DESIGN=dracula
+    container_name: adminer-test
+    links:
+      - db
+  
+  # project:
+  #   image: ./backend
+  #   links:
+  #     - db
+  #     - adminer
+  
+# volumes:
+#   cwm:
+
