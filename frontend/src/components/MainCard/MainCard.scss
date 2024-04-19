@@ -1,9 +1,17 @@
+@import "main";
+
+// .mainbox{ 
+//   padding: 18px 35px !important;
+//   background-color: $mainCardBg;
+//   box-sizing: border-box;
+// }
+
 @mixin tabstyle {
-  background-color: white;
+  background-color: white !important;
 }
 
 .new-tab {
-  background-color: #cccbc8;
+  background-color: #cccbc8 !important;
   color: grey !important;
   border-style: none;
 }
@@ -11,4 +19,13 @@
 .new-tab:hover,
 .new-tab:active {
   @include tabstyle;
+}
+
+@mixin padding_margin_zero{
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.tabpanel{
+  padding: 0px !important;
 }

@@ -1,7 +1,7 @@
 @import "main";
 
 .Subnavlinks {
-  display: inline-block;
+  display: inline-flex;
   text-decoration: none;
   position: fixed;
   padding-left: 2%;
@@ -34,7 +34,7 @@
   border-top-right-radius: 5px;
   background-color: $subnavHover;
 }
-.Subnavlinks:hover {
+.Subnavlinks:hover, .Subnavlinks:active {
   @include subnavLinkStyle;
 }
 
@@ -42,6 +42,7 @@
   justify-content: center;
   background-color: $subnavColor;
   border-style: none;
+  display: flex;
 }
 
 .appbar {

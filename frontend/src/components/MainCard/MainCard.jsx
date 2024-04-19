@@ -7,6 +7,19 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
 import "./MainCard.scss";
+import Leads from "../Core/Leads/Leads";
+import AddLead from "../Core/AddLead/AddLead";
+import EditLead from "../Core/EditLead/EditLead";
+
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 const MainCard = () => {
   const [value, setValue] = useState("one");
@@ -27,18 +40,19 @@ const MainCard = () => {
 
   const [TabPanelData, setTabPanelData] = useState([
     {
-      text: "Item One",
+      content: <Leads />,
       route: "/leads",
-      tabValue: "1",
+      tabValue: 1,
     },
     {
-      text: "Item Two",
-      tabValue: "2",
+      content: <AddLead />,
+      route: "/add-lead",
+      tabValue: 2,
     },
     {
-      text: "Item Three",
+      content: <EditLead />,
       route: "/edit-lead",
-      tabValue: "3",
+      tabValue: 3,
     },
   ]);
 
@@ -46,15 +60,28 @@ const MainCard = () => {
     setValue(newValue);
   };
 
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+
   return (
     <>
-      <Box sx={{ width: "26%" }}>
+      <Box
+        className='mainbox'
+        sx={{ flexgrow: 1, width: "100%", typography: "body1" }}
+      >
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <Box>
+            <TabList onChange={handleChange} aria-label='lab API tabs example'>
               {TabLink.map((tab) => (
                 <Tab
-                  className="new-tab"
+                  className='new-tab'
                   key={tab.text}
                   value={tab.tabValue}
                   label={tab.text}
@@ -63,7 +90,9 @@ const MainCard = () => {
             </TabList>
           </Box>
           {TabPanelData.map((PanelData) => (
-            <TabPanel value={PanelData.tabValue}>{PanelData.text}</TabPanel>
+            <TabPanel className='tabpanel' value={PanelData.tabValue}>
+              {PanelData.content}
+            </TabPanel>
           ))}
         </TabContext>
       </Box>

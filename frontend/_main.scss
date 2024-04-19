@@ -1,2 +1,15 @@
 $subnavColor: #00668c;
 $subnavHover: #00BFFF;
+$mainCardBg: #e7ecf0;
+
+@mixin padding_margin_zero {
+  margin: 0px;
+  padding: 0px;
+
+}
+
+.mainbox{ 
+  padding: 18px 35px !important;
+  background-color: $mainCardBg;
+  box-sizing: border-box;
+}

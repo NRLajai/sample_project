@@ -1,0 +1,42 @@
+@import "main";
+
+.container {
+  @include padding_margin_zero;
+}
+
+h1 {
+  color: $subnavHover;
+}
+
+h1,
+span {
+  @include padding_margin_zero;
+}
+span {
+  color: grey !important;
+}
+
+.leadboxfeatures {
+  display: flex;
+  background-color: white;
+  padding: 2px 20px;
+  .leadtitle {
+    flex-direction: column;
+    padding: 0.8% 0% 0% 0%;
+    margin: 0%;
+    font-size: 12px;
+  }
+}
+
+.leadtable {
+  display: flex;
+  padding: 25px 0px 30px 0px !important;
+}
+
+.MuiTabPanel-root {
+  @include padding_margin_zero;
+}
+
+.lead-container {
+  @include padding_margin_zero;
+}
