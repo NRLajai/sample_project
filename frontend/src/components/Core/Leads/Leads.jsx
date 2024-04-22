@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import { getLeads } from "../../../services/fakeLeads";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-
 import "./Leads.scss";
 
 const Leads = () => {
+  const fontColor = "grey";
+  const bkgColor = "white";
+  const headerColor = "#e7ecf0";
+
   const [state, SetState] = useState({
     rows: [],
     pageSize: 7,
@@ -21,7 +24,7 @@ const Leads = () => {
     fetchData();
   }, []);
 
-  const [Date, setDate] = useState({
+  const [Dates, setDates] = useState({
     from_date: 20,
     from_month: "September",
     to_date: 20,
@@ -32,13 +35,42 @@ const Leads = () => {
   const StatusCircle = (color) => (
     <Box
       component="div"
-      width={12}
-      height={12}
+      width={13}
+      height={13}
       borderRadius="50%"
       bgcolor={color}
       marginRight={1}
     />
   );
+
+  const modifyDate = (datestr) => {
+    if (datestr) {
+      const date = new Date(datestr);
+      const options = { day: "numeric", month: "short", year: "numeric" };
+      return date.toLocaleDateString("en-US", options);
+    }
+    return null;
+  };
+
+  const daysLeft = (datestr) => {
+    if (datestr) {
+      const now = new Date();
+      const targetDate = new Date(datestr);
+      const differenceInTime = targetDate.getTime() - now.getTime();
+      const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+
+      if (differenceInDays > 0) {
+        return `${differenceInDays} days left`;
+      } else {
+        return `0 days left`;
+      }
+    }
+    return null;
+  };
+
+  const capitalizeFirstLetter = (person) => {
+    return person.charAt(0).toUpperCase() + person.slice(1);
+  };
 
   const columns = [
     {
@@ -55,6 +87,24 @@ const Leads = () => {
       headerClassName: "table-header",
       // flex: 0.01,
       editable: true,
+      renderCell: (params) => {
+        return (
+          <Box component={"div"}>
+            <Box>
+              <Typography
+                component={"b"}
+                display={"block"}
+                fontSize={"0.9vw"}
+                fontWeight={600}
+                style={{ color: fontColor }}
+              >
+                {params?.row?.company}
+              </Typography>
+              <Typography fontSize={"0.8vw"}>{params?.row?.address}</Typography>
+            </Box>
+          </Box>
+        );
+      },
     },
     {
       field: "tag",
@@ -62,6 +112,21 @@ const Leads = () => {
       width: 160,
       headerClassName: "table-header",
       // editable: true,
+      renderCell: (params) => {
+        return (
+          <Box component={"div"}>
+            <Box>
+              <Typography
+                fontSize={"0.8vw"}
+                fontWeight={600}
+                style={{ color: fontColor }}
+              >
+                {params?.row?.tag}
+              </Typography>
+            </Box>
+          </Box>
+        );
+      },
     },
     {
       field: "person",
@@ -73,12 +138,23 @@ const Leads = () => {
       // editable: true,
       renderCell: (params) => {
         return (
-          <Box component={"div"} contact="contact_type">
+          <Box component={"div"}>
             <Box>
-              <Typography fontSize={"0.9vw"} fontWeight={600}>
-                {params?.row?.person}
+              <Typography
+                fontSize={"0.9vw"}
+                fontWeight={600}
+                style={{ color: fontColor }}
+              >
+                {params?.row?.person &&
+                  capitalizeFirstLetter(params?.row?.person)}
               </Typography>
-              <Typography fontSize={"0.8vw"}>{params?.row?.mobile}</Typography>
+              <Typography
+                // component={"span"}
+                fontSize={"0.8vw"}
+                style={{ padding: "0px", margin: "0px" }}
+              >
+                {params?.row?.mobile}
+              </Typography>
             </Box>
           </Box>
         );
@@ -97,11 +173,15 @@ const Leads = () => {
         return (
           <Box component={"div"}>
             <Box display={"flex"}>
-              <Typography display={"inline-flex"} fontSize={"0.9vw"}>
-                {params?.row?.status === "New" && StatusCircle("blue")}
+              <Typography
+                display={"inline-flex"}
+                fontSize={"0.6vw"}
+                style={{ paddingTop: "4px" }}
+              >
+                {params?.row?.status === "New" && StatusCircle("aqua")}
                 {params?.row?.status === "Hot" && StatusCircle("red")}
-                {params?.row?.status === "Lost" && StatusCircle("grey")}
-                {params?.row?.status === "Won" && StatusCircle("green")}
+                {params?.row?.status === "Lost" && StatusCircle("#cccccc")}
+                {params?.row?.status === "Won" && StatusCircle("#61bc84")}
               </Typography>
               <Typography
                 display={"inline-flex"}
@@ -123,7 +203,23 @@ const Leads = () => {
       headerClassName: "table-header",
       type: "string",
       width: 240,
-      editable: true,
+      // editable: true,
+      renderCell: (params) => {
+        return (
+          <Box component={"div"}>
+            <Typography
+              fontSize={"0.9vw"}
+              fontWeight={550}
+              style={{ color: fontColor }}
+            >
+              {params?.row?.date && modifyDate(params?.row?.date)}
+            </Typography>
+            <Typography fontSize={"0.7vw"}>
+              {params?.row?.date && daysLeft(params?.row?.date)}
+            </Typography>
+          </Box>
+        );
+      },
     },
     {
       field: null,
@@ -141,8 +237,8 @@ const Leads = () => {
         <div className="leadtitle">
           <h1>All Leads</h1>
           <span>
-            From {Date.from_date} {Date.from_month} to {Date.to_date}{" "}
-            {Date.to_month} {Date.year}
+            From {Dates.from_date} {Dates.from_month} to {Dates.to_date}{" "}
+            {Dates.to_month} {Dates.year}
           </span>
         </div>
       </div>
@@ -152,10 +248,13 @@ const Leads = () => {
           height: 570,
           width: "100%",
           "& .MuiDataGrid-cell": {
-            backgroundColor: "white",
+            backgroundColor: bkgColor,
           },
           "& .table-header": {
-            backgroundColor: "#e7ecf0",
+            backgroundColor: headerColor,
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: bkgColor,
           },
         }}
       >
@@ -173,7 +272,7 @@ const Leads = () => {
           }}
           pageSizeOptions={[8]}
           // checkboxSelection
-          disableRowSelectionOnClick
+          // disableRowSelectionOnClick
         />
       </Box>
     </>

@@ -25,6 +25,7 @@
       display: block !important;
       font-size: 12px;
       text-wrap: nowrap;
+      color: white !important;
     }
   }
 }
@@ -34,7 +35,8 @@
   border-top-right-radius: 5px;
   background-color: $subnavHover;
 }
-.Subnavlinks:hover, .Subnavlinks:active {
+.Subnavlinks:hover,
+.Subnavlinks:active {
   @include subnavLinkStyle;
 }
 
