@@ -19,15 +19,14 @@ const Leads = () => {
     };
     fetchData();
   }, []);
-  
-  console.log(state.data);
+
   const [Date, setDate] = useState({
     from_date: 20,
     from_month: "September",
     to_date: 20,
     to_month: "April",
+    year: "2024",
   });
-
 
   const columns = [
     { field: "image", headerName: null, path: "image" },
@@ -59,8 +58,8 @@ const Leads = () => {
         <div className='leadtitle'>
           <h1>All Leads</h1>
           <span>
-            From {Date.from_date} {Date.from_month} to {Date.to_date}
-            {Date.to_month}
+            From {Date.from_date} {Date.from_month} to {Date.to_date}{" "}
+            {Date.to_month} {Date.year}
           </span>
         </div>
       </div>

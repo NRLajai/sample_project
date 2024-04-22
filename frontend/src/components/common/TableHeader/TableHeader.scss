@@ -4,4 +4,15 @@
   color: #788189 !important;
   font-size: 15px;
   background-color: $mainCardBg;
+  // text-align: justify !important;
+  padding: 20px 1px !important;
+  margin : auto !important;
+}
+
+thead{
+  tr{
+    th{
+      text-align: center;
+    }
+  }
 }

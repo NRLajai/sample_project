@@ -26,18 +26,19 @@ const TableBody = (props) => {
     return columnData;
   };
 
+  console.log(data);
+
   return (
     <>
       <tbody>
         <tr>
-          {Array.isArray(data) &&
-            data.map((item) => (
-              <tr key={item._id}>
-                {columns.map((column) => (
-                  <td>{renderCell(item, column)}</td>
-                ))}
-              </tr>
-            ))}
+          {data.map((item) => (
+            <tr>
+              {columns.map((column) => (
+                <td key={item.id}>{renderCell(item, column)}</td>
+              ))}
+            </tr>
+          ))}
         </tr>
       </tbody>
     </>
