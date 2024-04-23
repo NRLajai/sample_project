@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { getLeads } from "../../../services/fakeLeads";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import "./Leads.scss";
+import "../../../hover.scss";
 
 const Leads = () => {
   const fontColor = "grey";
@@ -78,10 +82,29 @@ const Leads = () => {
       headerName: "",
       headerClassName: "table-header",
       sortable: false,
-      width: 80,
+      width: 70,
+      renderCell: (params) => {
+        return (
+          <Box
+            component="img"
+            style={{
+              borderRadius: "50%",
+              textAlign: "center",
+              width: "35px",
+              height: "35px",
+              maxWidth: "50px",
+              maxHeight: "50px",
+              margin: "auto",
+            }}
+            display="block"
+            src={params?.row?.image}
+            alt="Profile Image"
+          />
+        );
+      },
     },
     {
-      field: "company",
+      field: "company_details",
       headerName: "Company details",
       width: 450,
       headerClassName: "table-header",
@@ -98,7 +121,7 @@ const Leads = () => {
                 fontWeight={600}
                 style={{ color: fontColor }}
               >
-                {params?.row?.company}
+                {params?.row?.company_details}
               </Typography>
               <Typography fontSize={"0.8vw"}>{params?.row?.address}</Typography>
             </Box>
@@ -109,7 +132,7 @@ const Leads = () => {
     {
       field: "tag",
       headerName: "Project tag",
-      width: 160,
+      width: 180,
       headerClassName: "table-header",
       // editable: true,
       renderCell: (params) => {
@@ -134,7 +157,7 @@ const Leads = () => {
       headerClassName: "table-header",
       type: "string",
       sortable: false,
-      width: 230,
+      width: 250,
       // editable: true,
       renderCell: (params) => {
         return (
@@ -153,7 +176,7 @@ const Leads = () => {
                 fontSize={"0.8vw"}
                 style={{ padding: "0px", margin: "0px" }}
               >
-                {params?.row?.mobile}
+                {params?.row?.phone_number}
               </Typography>
             </Box>
           </Box>
@@ -166,7 +189,7 @@ const Leads = () => {
       headerClassName: "table-header",
       // description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 180,
+      width: 220,
       // valueGetter: (value, row) =>
       //   `${row.firstName || ""} ${row.lastName || ""}`,
       renderCell: (params) => {
@@ -198,11 +221,11 @@ const Leads = () => {
       },
     },
     {
-      field: "date",
+      field: "follow_up_date",
       headerName: "Follow-up date",
       headerClassName: "table-header",
       type: "string",
-      width: 240,
+      width: 250,
       // editable: true,
       renderCell: (params) => {
         return (
@@ -212,10 +235,12 @@ const Leads = () => {
               fontWeight={550}
               style={{ color: fontColor }}
             >
-              {params?.row?.date && modifyDate(params?.row?.date)}
+              {params?.row?.follow_up_date &&
+                modifyDate(params?.row?.follow_up_date)}
             </Typography>
             <Typography fontSize={"0.7vw"}>
-              {params?.row?.date && daysLeft(params?.row?.date)}
+              {params?.row?.follow_up_date &&
+                daysLeft(params?.row?.follow_up_date)}
             </Typography>
           </Box>
         );
@@ -224,10 +249,28 @@ const Leads = () => {
     {
       field: null,
       headerName: "Actions",
-      headerClassName: "table-header",
+      headerClassName: "table-header action-header",
       sortable: false,
-      // width: 350,
-      editable: true,
+      width: 348,
+      // editable: true,
+      renderCell: () => {
+        return (
+          <Box
+            component={"div"}
+            display={"flex"}
+            style={{
+              justifyContent: "space-between",
+              color: fontColor,
+              fontSize: "large",
+              maxWidth: "50%",
+            }}
+          >
+            <LocalPhoneIcon className="hvr-buzz-out" />
+            <CalendarMonthIcon className="hvr-bounce-in" />
+            <MoreVertIcon className="hvr-wobble-to-bottom-right" />
+          </Box>
+        );
+      },
     },
   ];
 

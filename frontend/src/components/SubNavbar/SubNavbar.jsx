@@ -40,7 +40,25 @@ const SubNavbar = () => {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar className="appbar" position="static">
+        <Box className="subnavbar" component={"div"}>
+          {columns.map((column) => (
+            <Box
+              className="flex-container nav-link hvr-bounce-to-top"
+              component={"div"}
+            >
+              <Box className="nav-icon">{column.img}</Box>
+              <Box className="nav-text">
+                <Box className="nav-title" component={"b"}>
+                  {column.title}
+                </Box>
+                <Box className="nav-count" component={"span"}>
+                  {column.count} {column.text}
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+        {/* <AppBar className="appbar" position="static">
           <Toolbar className="flex-container toolbar">
             {columns.map((navlink) => (
               <div key={navlink.title} className="Subnavlinks">
@@ -54,7 +72,7 @@ const SubNavbar = () => {
               </div>
             ))}
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
       </Box>
     </>
   );

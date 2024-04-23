@@ -1,53 +1,95 @@
 @import "main";
 
-.Subnavlinks {
-  display: inline-flex;
-  text-decoration: none;
-  position: fixed;
-  padding-left: 2%;
-  padding-right: 2%;
+.hvr-bounce-to-top:before {
+  background-color: #00bfff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.subnavbar {
   color: white;
-  font-size: 16px;
-  position: relative;
-  display: flex;
+  background-color: $subnavColor;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  .nav-link,
+  .nav-link:active {
+    padding: 0.8% 4%;
+    margin-top: 10px;
+    justify-content: center !important;
+  }
   div {
-    display: inline-flex;
-    flex-direction: column;
-    margin: 0px;
-    padding-left: 5%;
-    b {
-      display: block !important;
-      font-size: 15px;
-      padding-bottom: 1px;
+    .nav-icon {
+      display: inline-flex;
+      svg {
+        font-size: 31px;
+      }
     }
-    span {
-      padding-top: 1px;
-      display: block !important;
-      font-size: 12px;
-      text-wrap: nowrap;
-      color: white !important;
+    .nav-text {
+      display: inline-flex;
+      text-align: left;
+      flex-direction: column;
+
+      .nav-title {
+        font-size: 16px;
+      }
+      .nav-count {
+        color: white !important;
+        font-size: 11px;
+      }
     }
   }
 }
 
-@mixin subnavLinkStyle {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  background-color: $subnavHover;
-}
-.Subnavlinks:hover,
-.Subnavlinks:active {
-  @include subnavLinkStyle;
-}
+// .Subnavlinks {
+//   display: inline-flex;
+//   text-decoration: none;
+//   position: fixed;
+//   padding-left: 2%;
+//   padding-right: 2%;
+//   color: white;
+//   font-size: 16px;
+//   position: relative;
+//   display: flex;
+//   div {
+//     display: inline-flex;
+//     flex-direction: column;
+//     margin: 0px;
+//     padding-left: 5%;
+//     b {
+//       display: block !important;
+//       font-size: 15px;
+//       padding-bottom: 1px;
+//     }
+//     span {
+//       padding-top: 1px;
+//       display: block !important;
+//       font-size: 12px;
+//       text-wrap: nowrap;
+//       color: white !important;
+//     }
+//   }
+// }
 
-.toolbar {
-  justify-content: center;
-  background-color: $subnavColor;
-  border-style: none;
-  display: flex;
-}
+// @mixin subnavLinkStyle {
+//   border-top-left-radius: 5px;
+//   border-top-right-radius: 5px;
+//   background-color: $subnavHover;
+// }
+// .Subnavlinks:hover,
+// .Subnavlinks:active {
+//   @include subnavLinkStyle;
+// }
 
-.appbar {
-  background-color: white;
-  box-shadow: none;
-}
+// .toolbar {
+//   justify-content: center;
+//   background-color: $subnavColor;
+//   border-style: none;
+//   display: flex;
+// }
+
+// .appbar {
+//   background-color: white;
+//   box-shadow: none;
+// }
