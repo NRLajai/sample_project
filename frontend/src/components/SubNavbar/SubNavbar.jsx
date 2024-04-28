@@ -41,10 +41,11 @@ const SubNavbar = () => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Box className="subnavbar" component={"div"}>
-          {columns.map((column) => (
+          {columns.map((column, index) => (
             <Box
               className="flex-container nav-link hvr-bounce-to-top"
               component={"div"}
+              key={index}
             >
               <Box className="nav-icon">{column.img}</Box>
               <Box className="nav-text">

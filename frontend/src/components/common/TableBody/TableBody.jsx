@@ -26,8 +26,6 @@ const TableBody = (props) => {
     return columnData;
   };
 
-  console.log(data);
-
   return (
     <>
       <tbody>

@@ -1,14 +1,19 @@
 $subnavColor: #00668c;
-$subnavHover: #00BFFF;
+$subnavHover: #00bfff;
 $mainCardBg: #e7ecf0;
 
 @mixin padding_margin_zero {
   margin: 0px;
   padding: 0px;
-
 }
 
-.mainbox{ 
+@mixin leadmainbox {
+  display: flex !important;
+  background-color: white !important;
+  padding: 2px 10px 18px 10px !important;
+}
+
+.mainbox {
   padding: 18px 35px !important;
   background-color: $mainCardBg;
   box-sizing: border-box;

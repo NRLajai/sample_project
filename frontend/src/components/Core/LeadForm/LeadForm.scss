@@ -1,0 +1,56 @@
+@import "main";
+
+.leadboxmenu {
+  @include leadmainbox;
+}
+
+.form-container {
+  @include leadmainbox;
+  max-width: 100% !important;
+  flex-direction: column;
+  display: flex;
+
+  .main-box {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1%;
+    .box-1 {
+      display: flex;
+      flex-direction: column !important;
+      width: 40% !important;
+      div {
+        margin-top: 1%;
+        padding: 1%;
+      }
+    }
+    .box-2 {
+      width: 40% !important;
+      display: flex;
+      flex-direction: column !important;
+      div {
+        margin-top: 1%;
+        padding: 1%;
+      }
+      .upload-img {
+        margin: auto;
+        width: 40% !important;
+      }
+      .image-selected {
+        background-color: green;
+      }
+    }
+  }
+
+  button {
+    margin-left: 47%;
+    padding: 0.8%;
+    max-width: 11%;
+    font-weight: 800;
+    background-color: $subnavColor;
+  }
+  button:hover {
+    font-weight: 800;
+    background-color: #017ca9;
+  }
+}

@@ -1,13 +1,26 @@
 @import "main";
 
+$tabRadius: 50%;
+
 @mixin tabstyle {
   background-color: white !important;
 }
 
 .new-tab {
-  background-color: #cccbc8 !important;
+  display: inline-block !important;
+  background-color: rgba(177, 176, 176, 0.573) !important;
   color: grey !important;
-  border-style: none;
+  padding-right: 30px !important;
+  padding-left: 30px !important;
+}
+
+.new-tab:nth-child(1) {
+  border-radius: 0 $tabRadius 0 0;
+}
+
+.new-tab:nth-child(2),
+.new-tab:nth-child(3) {
+  border-radius: $tabRadius $tabRadius 0 0;
 }
 
 .new-tab:hover,
@@ -15,11 +28,11 @@
   @include tabstyle;
 }
 
-@mixin padding_margin_zero{
+@mixin padding_margin_zero {
   padding: 0px !important;
   margin: 0px !important;
 }
 
-.tabpanel{
+.tabpanel {
   padding: 0px !important;
 }

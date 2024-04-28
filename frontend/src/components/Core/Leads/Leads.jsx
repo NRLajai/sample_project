@@ -1,40 +1,45 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { getLeads } from "../../../services/fakeLeads";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { getLeads } from "../../../services/LeadServices";
+// import { getLeads } from "../../../services/fakeLeads";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+
 import "./Leads.scss";
 import "../../../hover.scss";
 
-const Leads = () => {
-  const fontColor = "grey";
-  const bkgColor = "white";
-  const headerColor = "#e7ecf0";
+const Leads = (props) => {
+  const { changeTab, addLeadTab, editLeadTab, TabData } = props;
 
-  const [state, SetState] = useState({
-    rows: [],
-    pageSize: 7,
-    currentPage: 1,
-    sortColumn: { path: "title", order: "asc" },
-  });
+  const [leadsData, setLeadsData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      SetState({ rows: getLeads() });
+      const response = await getLeads();
+      setLeadsData(response?.data || []);
     };
     fetchData();
   }, []);
 
-  const [Dates, setDates] = useState({
+  const rows = leadsData;
+
+  const fontColor = "grey";
+  const bkgColor = "white";
+  const headerColor = "#e7ecf0";
+
+  const Dates = {
     from_date: 20,
     from_month: "September",
     to_date: 20,
     to_month: "April",
     year: "2024",
-  });
+  };
 
   const StatusCircle = (color) => (
     <Box
@@ -76,6 +81,10 @@ const Leads = () => {
     return person.charAt(0).toUpperCase() + person.slice(1);
   };
 
+  const _DeleteRecord = async () => {
+    console.log("DELETEING");
+  };
+
   const columns = [
     {
       field: "image",
@@ -108,8 +117,7 @@ const Leads = () => {
       headerName: "Company details",
       width: 450,
       headerClassName: "table-header",
-      // flex: 0.01,
-      editable: true,
+      // editable: true,
       renderCell: (params) => {
         return (
           <Box component={"div"}>
@@ -152,7 +160,7 @@ const Leads = () => {
       },
     },
     {
-      field: "person",
+      field: "name",
       headerName: "Contact person",
       headerClassName: "table-header",
       type: "string",
@@ -168,11 +176,9 @@ const Leads = () => {
                 fontWeight={600}
                 style={{ color: fontColor }}
               >
-                {params?.row?.person &&
-                  capitalizeFirstLetter(params?.row?.person)}
+                {params?.row?.name && capitalizeFirstLetter(params?.row?.name)}
               </Typography>
               <Typography
-                // component={"span"}
                 fontSize={"0.8vw"}
                 style={{ padding: "0px", margin: "0px" }}
               >
@@ -265,26 +271,45 @@ const Leads = () => {
               maxWidth: "50%",
             }}
           >
-            <LocalPhoneIcon className="hvr-buzz-out" />
+            <LocalPhoneIcon className="hvr-buzz-out phone-icon" />
             <CalendarMonthIcon className="hvr-bounce-in" />
-            <MoreVertIcon className="hvr-wobble-to-bottom-right" />
+            <MoreVertIcon className="hvr-bounce-in" />
+            <DeleteIcon
+              className="hvr-bounce-in delete-icon"
+              onClick={_DeleteRecord}
+            />
           </Box>
         );
       },
     },
   ];
 
+  const _OnClickRow = (e) => {
+    const { id } = e;
+    TabData(e, id);
+    changeTab(e, editLeadTab);
+  };
+
   return (
     <>
-      <div className="flex-container leadboxfeatures">
-        <div className="leadtitle">
+      <Box className="flex-container leadboxmenu">
+        <Box className="lead-title">
           <h1>All Leads</h1>
           <span>
             From {Dates.from_date} {Dates.from_month} to {Dates.to_date}{" "}
             {Dates.to_month} {Dates.year}
           </span>
-        </div>
-      </div>
+        </Box>
+        <Stack className="stack-box" direction="row" spacing={3}>
+          <Button
+            className="add-new-btn"
+            variant="contained"
+            onClick={(e) => changeTab(e, addLeadTab)}
+          >
+            Add new
+          </Button>
+        </Stack>
+      </Box>
 
       <Box
         sx={{
@@ -303,8 +328,8 @@ const Leads = () => {
       >
         <DataGrid
           autoHeight
-          {...state.data}
-          rows={state.rows}
+          {...rows}
+          rows={rows}
           columns={columns}
           initialState={{
             pagination: {
@@ -314,6 +339,7 @@ const Leads = () => {
             },
           }}
           pageSizeOptions={[8]}
+          onRowClick={_OnClickRow}
           // checkboxSelection
           // disableRowSelectionOnClick
         />

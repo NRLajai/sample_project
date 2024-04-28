@@ -16,26 +16,24 @@ const NavBar = () => {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar className='nav-appbar' position='static'>
-          <Toolbar
-            className='flex-container navbar-toolbar'
-          >
+        <AppBar className="nav-appbar" position="static">
+          <Toolbar className="flex-container navbar-toolbar">
             <img
-              alt='Project logo'
-              src='/logo1.png'
-              className='float-right navstyle'
+              alt="Project logo"
+              src="/logo1.png"
+              className="float-right navstyle"
             />
             <div style={{ display: "inline-flex" }}>
               <CircleNotificationsRoundedIcon
-                className='navstyle navpadding'
-                fontSize='large'
+                className="navstyle navpadding hvr-buzz"
+                fontSize="large"
                 style={{
                   color: "grey",
                 }}
               />
               <img
-                className='navstyle navpadding'
-                src='/profile.png'
+                className="navstyle navpadding"
+                src="/profile.png"
                 style={{
                   width: "38px",
                   height: "38px",
@@ -44,14 +42,14 @@ const NavBar = () => {
                 }}
               />
               <div
-                className='navpadding'
+                className="navpadding"
                 style={{
                   color: "grey",
                   maxWidth: "140px",
                 }}
               >
                 <b
-                  className='font-weight-bold'
+                  className="font-weight-bold"
                   style={{
                     marginBottom: "0px",
                     marginTop: "8px",
@@ -72,8 +70,8 @@ const NavBar = () => {
                 </p>
               </div>
               <SettingsIcon
-                className='navstyle navpadding'
-                fontSize='large'
+                className="hvr-bounce-in navstyle navpadding"
+                fontSize="large"
                 style={{ color: "grey" }}
               />
             </div>

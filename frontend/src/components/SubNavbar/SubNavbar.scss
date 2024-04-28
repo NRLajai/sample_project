@@ -12,10 +12,11 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  text-align: center;
+  display: flex;
+justify-content: center;
   .nav-link,
   .nav-link:active {
-    padding: 0.8% 4%;
+    padding: 0.8% 3%;
     margin-top: 10px;
     justify-content: center !important;
   }
