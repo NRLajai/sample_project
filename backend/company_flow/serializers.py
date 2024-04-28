@@ -3,6 +3,8 @@ from rest_framework import serializers
 import hashlib
 import os
 from aagnia_backend import settings
+import base64
+from rest_framework import response
 
 from .models import Lead
 
@@ -10,7 +12,7 @@ from .models import Lead
 class LeadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lead
-        fields = ["id", "name", "company_details", "tag", "status", "follow_up_date", "phone_number", "image"]
+        fields = ["id", "name", "company_details", "tag", "status", "follow_up_date", "phone_number", "image", "address", "created_at"]
     
     def validate_image(self, value):
         try:
@@ -33,11 +35,22 @@ class LeadSerializer(serializers.ModelSerializer):
                 image_format = image_content_type.split('/')[-1]
                 image_name = hashlib.md5(value.name.encode()).hexdigest() +"."+ image_format
                 save_path = os.path.join(settings.MEDIA_ROOT, 'images', image_name)
-                with open(save_path, 'wb') as f:
-                    for chunk in value.chunks():
-                        f.write(chunk)
+
+                if os.path.exists(save_path):
+                    os.remove(save_path)
+
+                try:
+                    with open(save_path, 'wb') as f:
+                        for chunk in value.chunks():
+                            f.write(chunk)
+                except:
+                    with open(value.temporary_file_path(), 'rb') as f:
+                        encoded_image = base64.b64encode(f.read()).decode('utf-8')
+                                                                        
+                    with open(save_path, 'wb') as f:
+                        f.write(encoded_image)
             else:
-                raise ValidationError("Request object not available in context")    
+                raise ValidationError("Request object not available in context")
             
             return f"{image_url}{image_name}"
         

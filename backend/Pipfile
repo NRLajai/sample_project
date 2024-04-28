@@ -15,6 +15,7 @@ pillow = "==10.3.0"
 sqlparse = "==0.4.4"
 typing-extensions = "==4.9.0"
 python-magic = "==0.4.27"
+django-cors-headers = "*"
 
 [dev-packages]
 

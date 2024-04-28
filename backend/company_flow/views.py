@@ -11,6 +11,8 @@ from .serializers import LeadSerializer
 from django.http import HttpResponse
 from django.views.generic import View
 from django.conf import settings
+from django.shortcuts import get_object_or_404
+from django.http import Http404
 import os
 
 
@@ -37,3 +39,17 @@ class LeadList(ListCreateAPIView):
 
     def get_serializer_context(self):
         return {"request": self.request}
+
+
+class LeadDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Lead.objects.all()
+    serializer_class = LeadSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields =  ["name", "company_details"]
+    ordering_fields = ["name", "company_details", "follow_up_date"]
+
+    # def get_queryset(self):
+    #     return get_object_or_404(Lead, pk=self.kwargs.get('pk'))
+    
+    # def get_serializer_context(self):
+    #     return {"request": self.request}

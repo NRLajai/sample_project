@@ -5,5 +5,6 @@ from .views import *
 
 urlpatterns = [
     path('leads/', LeadList.as_view()),
+    path('leads/<int:pk>/', LeadDetail.as_view()),
     path('leads/image/<path:image>', ImageServeView.as_view(), name='image_serve')
 ]

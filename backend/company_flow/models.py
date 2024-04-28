@@ -18,8 +18,9 @@ class Lead(models.Model):
 
     created_at = models.DateField(auto_now_add=True)
     company_details = models.TextField(max_length=255, null=False)
+    address = models.CharField(max_length=255, null=True, blank=True)
     tag = models.CharField(max_length=50)
-    
+
     status = models.CharField(
         max_length=50, choices=STATUS_CHOICES, default=STATUS_NEW)
     follow_up_date = models.DateField(null=False, blank=False)
@@ -29,7 +30,7 @@ class Lead(models.Model):
     )
     name = models.CharField(max_length=50, null=False)
     image = models.ImageField(upload_to='images/', null=False)
-    
+
     def __str__(self) -> str:
         return self.name
 
