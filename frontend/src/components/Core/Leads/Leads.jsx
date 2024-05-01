@@ -6,7 +6,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getLeads } from "../../../services/LeadServices";
+import { getLeads, deleteLead } from "../../../services/LeadServices";
 // import { getLeads } from "../../../services/fakeLeads";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -81,8 +81,30 @@ const Leads = (props) => {
     return person.charAt(0).toUpperCase() + person.slice(1);
   };
 
-  const _DeleteRecord = async () => {
-    console.log("DELETEING");
+  const _DeleteRecord = async (event) => {
+    const id =
+      event.target.parentNode.parentNode.parentNode.parentNode.getAttribute(
+        "data-id"
+      );
+    if (id === "27") {
+      console.log("Poda dei...");
+      return;
+    }
+    const ExistLeads = leadsData;
+    const updatedArray = leadsData.filter((lead) => lead.id !== parseInt(id));
+    setLeadsData(updatedArray || []);
+    try {
+      deleteLead(id);
+      console.log("Successfully deleted");
+    } catch {
+      setLeadsData(ExistLeads);
+    }
+  };
+
+  const _OnClickRow = (e) => {
+    const id = e.currentTarget.parentNode.parentNode.getAttribute("data-id");
+    TabData(e, { id: id, newTab: editLeadTab });
+    // changeTab(e, editLeadTab);
   };
 
   const columns = [
@@ -91,7 +113,7 @@ const Leads = (props) => {
       headerName: "",
       headerClassName: "table-header",
       sortable: false,
-      width: 70,
+      width: 90,
       renderCell: (params) => {
         return (
           <Box
@@ -120,7 +142,7 @@ const Leads = (props) => {
       // editable: true,
       renderCell: (params) => {
         return (
-          <Box component={"div"}>
+          <Box component={"div"} onClick={_OnClickRow}>
             <Box>
               <Typography
                 component={"b"}
@@ -145,7 +167,7 @@ const Leads = (props) => {
       // editable: true,
       renderCell: (params) => {
         return (
-          <Box component={"div"}>
+          <Box component={"div"} onClick={_OnClickRow}>
             <Box>
               <Typography
                 fontSize={"0.8vw"}
@@ -169,7 +191,7 @@ const Leads = (props) => {
       // editable: true,
       renderCell: (params) => {
         return (
-          <Box component={"div"}>
+          <Box component={"div"} onClick={_OnClickRow}>
             <Box>
               <Typography
                 fontSize={"0.9vw"}
@@ -200,7 +222,7 @@ const Leads = (props) => {
       //   `${row.firstName || ""} ${row.lastName || ""}`,
       renderCell: (params) => {
         return (
-          <Box component={"div"}>
+          <Box component={"div"} onClick={_OnClickRow}>
             <Box display={"flex"}>
               <Typography
                 display={"inline-flex"}
@@ -231,11 +253,11 @@ const Leads = (props) => {
       headerName: "Follow-up date",
       headerClassName: "table-header",
       type: "string",
-      width: 250,
+      width: 270,
       // editable: true,
       renderCell: (params) => {
         return (
-          <Box component={"div"}>
+          <Box component={"div"} onClick={_OnClickRow}>
             <Typography
               fontSize={"0.9vw"}
               fontWeight={550}
@@ -273,22 +295,16 @@ const Leads = (props) => {
           >
             <LocalPhoneIcon className="hvr-buzz-out phone-icon" />
             <CalendarMonthIcon className="hvr-bounce-in" />
-            <MoreVertIcon className="hvr-bounce-in" />
             <DeleteIcon
               className="hvr-bounce-in delete-icon"
               onClick={_DeleteRecord}
             />
+            <MoreVertIcon className="hvr-bounce-in" />
           </Box>
         );
       },
     },
   ];
-
-  const _OnClickRow = (e) => {
-    const { id } = e;
-    TabData(e, id);
-    changeTab(e, editLeadTab);
-  };
 
   return (
     <>
@@ -313,7 +329,7 @@ const Leads = (props) => {
 
       <Box
         sx={{
-          height: 570,
+          height: 560,
           width: "100%",
           "& .MuiDataGrid-cell": {
             backgroundColor: bkgColor,
@@ -339,7 +355,7 @@ const Leads = (props) => {
             },
           }}
           pageSizeOptions={[8]}
-          onRowClick={_OnClickRow}
+          // onRowClick={_OnClickRow}
           // checkboxSelection
           // disableRowSelectionOnClick
         />

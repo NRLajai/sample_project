@@ -23,6 +23,6 @@ export function saveLead(lead) {
   return http.post(`${apiEndpoint}/leads/`, lead);
 }
 
-export function deleteMovie(leadId) {
+export function deleteLead(leadId) {
   return http.delete(LeadUrl(leadId));
 }

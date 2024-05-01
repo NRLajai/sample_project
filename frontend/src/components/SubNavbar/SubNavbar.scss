@@ -13,7 +13,18 @@
   max-width: 100%;
   box-sizing: border-box;
   display: flex;
-justify-content: center;
+  justify-content: center;
+
+  .nav-link {
+    display: flex !important;
+    width: fit-content !important;
+    .nav-icon {
+      margin-right: 5% !important;
+    }
+    .nav-text {
+      text-wrap: nowrap !important;
+    }
+  }
   .nav-link,
   .nav-link:active {
     padding: 0.8% 3%;
@@ -42,55 +53,3 @@ justify-content: center;
     }
   }
 }
-
-// .Subnavlinks {
-//   display: inline-flex;
-//   text-decoration: none;
-//   position: fixed;
-//   padding-left: 2%;
-//   padding-right: 2%;
-//   color: white;
-//   font-size: 16px;
-//   position: relative;
-//   display: flex;
-//   div {
-//     display: inline-flex;
-//     flex-direction: column;
-//     margin: 0px;
-//     padding-left: 5%;
-//     b {
-//       display: block !important;
-//       font-size: 15px;
-//       padding-bottom: 1px;
-//     }
-//     span {
-//       padding-top: 1px;
-//       display: block !important;
-//       font-size: 12px;
-//       text-wrap: nowrap;
-//       color: white !important;
-//     }
-//   }
-// }
-
-// @mixin subnavLinkStyle {
-//   border-top-left-radius: 5px;
-//   border-top-right-radius: 5px;
-//   background-color: $subnavHover;
-// }
-// .Subnavlinks:hover,
-// .Subnavlinks:active {
-//   @include subnavLinkStyle;
-// }
-
-// .toolbar {
-//   justify-content: center;
-//   background-color: $subnavColor;
-//   border-style: none;
-//   display: flex;
-// }
-
-// .appbar {
-//   background-color: white;
-//   box-shadow: none;
-// }

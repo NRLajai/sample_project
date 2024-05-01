@@ -24,40 +24,28 @@ const MainCard = () => {
     buttonText: "",
   });
 
-  const handleTabData = (event, value) => {
-    SetTabData(value);
+  const handleTabData = async (event, value) => {
+    const { id, newTab } = value;
+    if (newTab === "3") {
+      try {
+        const response = await getLead(id);
+        setLeadData(response?.data || []);
+        setLeadUtils({
+          title: "Edit Lead",
+          buttonText: "EDIT LEAD",
+        });
+        SetCurrentTab(newTab);
+      } catch (error) {
+        console.error("Error fetching lead data:", error);
+      } finally {
+      }
+    }
   };
 
   const handleChangeTab = (event, value) => {
     // console.log(" changeTab to " + value);
     SetCurrentTab(value);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (currentTab === "2") {
-        setLeadUtils((prevState) => ({
-          ...prevState,
-          title: "Add Lead",
-          buttonText: "ADD LEAD",
-        }));
-      } else if (currentTab === "3") {
-        try {
-          const response = await getLead(TabData);
-          setLeadData(response?.data || []);
-          setLeadUtils((prevState) => ({
-            ...prevState,
-            title: "Edit Lead",
-            buttonText: "EDIT LEAD",
-          }));
-        } catch (error) {
-          // Handle error if needed
-          console.error("Error fetching lead data:", error);
-        }
-      }
-    };
-    fetchData();
-  }, [currentTab, TabData]);
 
   const TabLink = [
     {
@@ -81,14 +69,15 @@ const MainCard = () => {
           addLeadTab={"2"}
           editLeadTab={"3"}
           TabData={handleTabData}
-          changeTab={handleChangeTab}
           currentTab={currentTab}
+          changeTab={handleChangeTab}
+          setLeadData={setLeadData}
         />
       ),
       tabValue: "1",
     },
     {
-      content: <LeadForm leadutils={leadutils} />,
+      content: <LeadForm leadutils={leadutils} leadData={{}} />,
       tabValue: "2",
     },
     {

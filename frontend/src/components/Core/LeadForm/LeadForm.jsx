@@ -15,39 +15,37 @@ import "./LeadForm.scss";
 
 const LeadForm = (props) => {
   const { leadutils, leadData } = props;
-  // const [leadData, setLeadData] = useState([]);
 
+  console.log(leadData);
   const [formData, setFormData] = useState({
-    name: leadData?.name ? leadData.name : "efw",
-    company_details: leadData?.company_details
-      ? leadData.company_details
-      : "fewf",
-    tag: leadData?.tag ? leadData.tag : "tag",
-    address: leadData?.address ? leadData.address : "fewg",
-    phone_number: leadData?.phone_number ? leadData.phone_number : "1234512345",
+    name: leadData?.name ? leadData.name : "",
+    company_details: leadData?.company_details ? leadData.company_details : "",
+    tag: leadData?.tag ? leadData.tag : "",
+    address: leadData?.address ? leadData.address : "",
+    phone_number: leadData?.phone_number ? leadData.phone_number : "",
     follow_up_date: leadData?.follow_up_date
-      ? leadData.follow_up_date
-      : "2024-04-02",
-    status: leadData?.status ? leadData.status : "New",
+      ? new Date(leadData.follow_up_date)
+      : "",
+    status: leadData?.status ? leadData.status : "",
     image: leadData?.image ? leadData.image : null,
   });
 
   const statuses = [
     {
       label: "New",
-      value: "N",
+      value: "New",
     },
     {
       label: "Won",
-      value: "W",
+      value: "Won",
     },
     {
       label: "Hot",
-      value: "H",
+      value: "Hot",
     },
     {
       label: "Lost",
-      value: "L",
+      value: "Lost",
     },
   ];
 
@@ -56,7 +54,7 @@ const LeadForm = (props) => {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    return `${year}/${month}/${day}`;
   };
 
   const handleChange = (event) => {
@@ -67,6 +65,14 @@ const LeadForm = (props) => {
       [name]: value,
     }));
     console.log(formData);
+  };
+
+  const handleChangeDate = (date) => {
+    console.log(typeof date);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      follow_up_date: date,
+    }));
   };
 
   const handleFileChange = (event) => {
@@ -145,6 +151,7 @@ const LeadForm = (props) => {
               label="Name"
               name="name"
               variant="outlined"
+              value={formData.name}
               onChange={handleChange}
             />
             <TextField
@@ -153,6 +160,7 @@ const LeadForm = (props) => {
               label="Company Details"
               name="company_details"
               variant="outlined"
+              value={formData.company_details}
               onChange={handleChange}
             />
             <TextField
@@ -161,6 +169,7 @@ const LeadForm = (props) => {
               label="Tag"
               name="tag"
               variant="outlined"
+              value={formData.tag}
               onChange={handleChange}
             />
             <TextField
@@ -169,6 +178,7 @@ const LeadForm = (props) => {
               label="address"
               name="address"
               variant="outlined"
+              value={formData.address}
               onChange={handleChange}
             />
           </Box>
@@ -180,6 +190,7 @@ const LeadForm = (props) => {
               label="Phone number"
               name="phone_number"
               variant="outlined"
+              value={formData.phone_number}
               onChange={handleChange}
               inputProps={{
                 pattern: "[0-9]*",
@@ -187,33 +198,27 @@ const LeadForm = (props) => {
                 maxLength: 10,
               }}
             />
-            <TextField
-              className="addlead-field"
-              id="id-date"
-              label="Date"
-              name="follow_up_date"
-              defaultValue="2024-04-01"
-              variant="outlined"
-              // onChange={handleChange}
-            />
 
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                id="id-date"
+                label="Date"
                 name="follow_up_date"
-                value={formData.follow_up_date}
-                onChange={handleChange}
+                // value={formData.follow_up_date}
+                onChange={handleChangeDate}
+                format="YYYY-MM-DD"
               />
-            </LocalizationProvider> */}
+            </LocalizationProvider>
 
             <TextField
               id="outlined-select-currency"
               select
               label="Status"
               name="status"
-              onChange={handleChange}
               // helperText="Please select status"
               // defaultValue="New"
-              value="N"
+              value={formData.status}
+              onChange={handleChange}
             >
               {statuses.map((status) => (
                 <MenuItem key={status.value} value={status.value}>
@@ -234,6 +239,7 @@ const LeadForm = (props) => {
                 accept="image/*"
                 style={{ display: "none" }}
                 name="image"
+                // value={formData.image}
                 onChange={handleFileChange}
               />
               {/* <DeleteIcon /> */}
