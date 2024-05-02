@@ -1,10 +1,11 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import TextField from "@mui/material/TextField";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getLeads, deleteLead } from "../../../services/LeadServices";
 // import { getLeads } from "../../../services/fakeLeads";
@@ -18,14 +19,32 @@ const Leads = (props) => {
   const { changeTab, addLeadTab, editLeadTab, TabData } = props;
 
   const [leadsData, setLeadsData] = useState([]);
+  const [OldleadsData, setOldLeadsData] = useState([]);
+  const [searchQuery, setsearchQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getLeads();
-      setLeadsData(response?.data || []);
+      try {
+        const response = await getLeads();
+        setLeadsData(response?.data || []);
+        setOldLeadsData(response?.data || []);
+      } catch (error) {
+        console.log("Could not able to fetch Leads:", error);
+      }
     };
     fetchData();
   }, []);
+
+  const handleSearch = (key) => {
+    if (key) {
+      const filtered = leadsData.filter((m) =>
+        m.company_details.toLowerCase().startsWith(key.toLowerCase())
+      );
+      setLeadsData(filtered || []);
+    } else {
+      setLeadsData(OldleadsData || []);
+    }
+  };
 
   const rows = leadsData;
 
@@ -51,6 +70,12 @@ const Leads = (props) => {
       marginRight={1}
     />
   );
+
+  const handlesearchQuery = (event) => {
+    const searchKey = event.target.value;
+    setsearchQuery(searchKey);
+    handleSearch(searchKey);
+  };
 
   const modifyDate = (datestr) => {
     if (datestr) {
@@ -81,13 +106,11 @@ const Leads = (props) => {
     return person.charAt(0).toUpperCase() + person.slice(1);
   };
 
-  const _DeleteRecord = async (event) => {
-    const id =
-      event.target.parentNode.parentNode.parentNode.parentNode.getAttribute(
-        "data-id"
-      );
-    if (id === "27") {
-      console.log("Poda dei...");
+  const _DeleteRecord = async (id) => {
+    // console.log(typeof id);
+    // console.log(id);
+    if (id === 33) {
+      console.log("Poda dei...U cant delete my record");
       return;
     }
     const ExistLeads = leadsData;
@@ -281,7 +304,8 @@ const Leads = (props) => {
       sortable: false,
       width: 348,
       // editable: true,
-      renderCell: () => {
+      renderCell: (params) => {
+        const rowID = params?.row?.id;
         return (
           <Box
             component={"div"}
@@ -297,7 +321,7 @@ const Leads = (props) => {
             <CalendarMonthIcon className="hvr-bounce-in" />
             <DeleteIcon
               className="hvr-bounce-in delete-icon"
-              onClick={_DeleteRecord}
+              onClick={() => _DeleteRecord(rowID)}
             />
             <MoreVertIcon className="hvr-bounce-in" />
           </Box>
@@ -317,6 +341,22 @@ const Leads = (props) => {
           </span>
         </Box>
         <Stack className="stack-box" direction="row" spacing={3}>
+          <TextField
+            className="search-bar"
+            id="outlined-basic"
+            variant="outlined"
+            placeholder="Search leads"
+            value={searchQuery}
+            onChange={handlesearchQuery}
+            InputProps={{
+              endAdornment: (
+                <SearchIcon
+                  className="search-icon"
+                  style={{ marginRight: "8%", color: "#6B7280" }}
+                />
+              ),
+            }}
+          />
           <Button
             className="add-new-btn"
             variant="contained"
@@ -363,5 +403,4 @@ const Leads = (props) => {
     </>
   );
 };
-
 export default Leads;

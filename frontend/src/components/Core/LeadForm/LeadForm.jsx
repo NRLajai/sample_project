@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Box, Button, TextField, MenuItem } from "@mui/material";
@@ -16,16 +16,13 @@ import "./LeadForm.scss";
 const LeadForm = (props) => {
   const { leadutils, leadData } = props;
 
-  console.log(leadData);
   const [formData, setFormData] = useState({
     name: leadData?.name ? leadData.name : "",
     company_details: leadData?.company_details ? leadData.company_details : "",
     tag: leadData?.tag ? leadData.tag : "",
     address: leadData?.address ? leadData.address : "",
     phone_number: leadData?.phone_number ? leadData.phone_number : "",
-    follow_up_date: leadData?.follow_up_date
-      ? new Date(leadData.follow_up_date)
-      : "",
+    follow_up_date: leadData?.follow_up_date ? leadData.follow_up_date : "",
     status: leadData?.status ? leadData.status : "",
     image: leadData?.image ? leadData.image : null,
   });
@@ -33,42 +30,46 @@ const LeadForm = (props) => {
   const statuses = [
     {
       label: "New",
-      value: "New",
+      value: "N",
     },
     {
       label: "Won",
-      value: "Won",
+      value: "W",
     },
     {
       label: "Hot",
-      value: "Hot",
+      value: "H",
     },
     {
       label: "Lost",
-      value: "Lost",
+      value: "L",
     },
   ];
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    return `${year}/${month}/${day}`;
+  const formatDate = (date) => {
+    if (typeof date !== "string") {
+      return date.toISOString().split("T")[0];
+    }
+    return date;
+  };
+
+  const formatStatus = (status) => {
+    const statsObj = statuses.find((s) => s.label === status);
+    if (statsObj) {
+      return statsObj.value;
+    }
+    return status;
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
-    console.log(formData);
   };
 
   const handleChangeDate = (date) => {
-    console.log(typeof date);
     setFormData((prevFormData) => ({
       ...prevFormData,
       follow_up_date: date,
@@ -100,6 +101,9 @@ const LeadForm = (props) => {
   };
 
   const handleSubmit = async () => {
+    console.log(formData);
+
+    // return;
     if (
       formData.name &&
       formData.company_details &&
@@ -108,25 +112,32 @@ const LeadForm = (props) => {
       formData.status &&
       formData.image
     ) {
+      setTimeout(() => {}, 1000);
       let postFormData = new FormData();
       postFormData.append("name", formData.name);
       postFormData.append("company_details", formData.company_details);
       postFormData.append("tag", formData.tag);
       postFormData.append("phone_number", formData.phone_number);
-      postFormData.append("status", formData.status);
+      postFormData.append("status", formatStatus(formData.status));
       postFormData.append("image", formData.image);
       postFormData.append("address", formData.address);
-      postFormData.append("follow_up_date", formData.follow_up_date);
-
-      const response = await saveLead(postFormData);
-      console.log(response.status);
-      if (response.status === 201) {
-        console.log("scueess");
-      } else {
-        console.log("error");
+      postFormData.append(
+        "follow_up_date",
+        formatDate(formData.follow_up_date)
+      );
+      try {
+        const response = await saveLead(postFormData);
+        console.log(response.status);
+        if (response.status === 201) {
+          console.log("scueess");
+        } else {
+          console.log("error");
+        }
+      } catch {
+        console.log("Something error in submit");
       }
     } else {
-      console.log("ELSE");
+      console.log("Please fill all fields");
       console.log(formData);
     }
   };
@@ -203,21 +214,22 @@ const LeadForm = (props) => {
               <DatePicker
                 id="id-date"
                 label="Date"
-                name="follow_up_date"
-                // value={formData.follow_up_date}
-                onChange={handleChangeDate}
                 format="YYYY-MM-DD"
+                name="follow_up_date"
+                onChange={handleChangeDate}
+                // value={formData.follow_up_date && formatDate(formData.follow_up_date)}
               />
             </LocalizationProvider>
 
             <TextField
+              className="status-field"
               id="outlined-select-currency"
               select
               label="Status"
               name="status"
               // helperText="Please select status"
               // defaultValue="New"
-              value={formData.status}
+              value={formData.status && formatStatus(formData.status)}
               onChange={handleChange}
             >
               {statuses.map((status) => (
@@ -227,7 +239,8 @@ const LeadForm = (props) => {
               ))}
             </TextField>
             <Button
-              className={`upload-img ${formData.image ? "image-selected" : ""}`}
+              // className={`upload-img ${formData.image ? "image-selected" : ""}`}
+              className="upload-img"
               component="label"
               role={undefined}
               variant="contained"

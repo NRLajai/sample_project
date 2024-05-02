@@ -20,8 +20,8 @@ const MainCard = () => {
   const [TabData, SetTabData] = useState("");
   const [currentTab, SetCurrentTab] = useState("1");
   const [leadutils, setLeadUtils] = useState({
-    title: "",
-    buttonText: "",
+    title: "Add Lead",
+    buttonText: "ADD LEAD",
   });
 
   const handleTabData = async (event, value) => {

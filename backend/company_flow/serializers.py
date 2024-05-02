@@ -56,3 +56,15 @@ class LeadSerializer(serializers.ModelSerializer):
         
         except Exception as err:
             raise ValidationError(err)
+        
+    
+    def validate_status(self, value):
+        if value == "L":
+            return "Lost"
+        elif value == "N":
+            return "New"
+        elif value == "W":
+            return "Won"
+        elif value == "H":
+            return "Hot"
+        

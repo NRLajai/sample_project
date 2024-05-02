@@ -4,9 +4,7 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import WatchLaterRoundedIcon from "@mui/icons-material/WatchLaterRounded";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import "./SubNavbar.scss";
 
 const SubNavbar = () => {
@@ -37,6 +35,14 @@ const SubNavbar = () => {
     },
   ]);
 
+  const handleSubnavBar = (title, totalCount) => {
+    // Setcolumns((prevState) =>
+    //   prevState.map((column) =>
+    //     column.title === title ? { ...column, count: totalCount } : column
+    //   )
+    // );
+  };
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -59,21 +65,6 @@ const SubNavbar = () => {
             </Box>
           ))}
         </Box>
-        {/* <AppBar className="appbar" position="static">
-          <Toolbar className="flex-container toolbar">
-            {columns.map((navlink) => (
-              <div key={navlink.title} className="Subnavlinks">
-                {navlink.img}
-                <div>
-                  <b>{navlink.title}</b>
-                  <span>
-                    {navlink.count} {navlink.text}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </Toolbar>
-        </AppBar> */}
       </Box>
     </>
   );
